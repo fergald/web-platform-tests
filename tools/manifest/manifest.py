@@ -223,7 +223,10 @@ def load(tests_root, manifest):
         try:
             with open(manifest) as f:
                 rv = Manifest.from_json(tests_root, json.load(f))
-        except IOError:
+       except KeyboardInterrupt:
+            raise
+        except Exception as e:
+            logger.warning("%r may be corrupted: %s" % (manifest, e))
             return None
         return rv
 
